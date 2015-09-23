@@ -1,0 +1,60 @@
+Functional requirements - things we need
+	Web-based management system Compatible with Chrome, IE11+, Saffari, Firefox
+	Javascript enabled
+	Submit a workorder request
+	2 user roles (Tenant & Manager)
+	Query a workorder request
+	Modify a workorder
+	Closing a workorder
+	Constant contact system / eblast system
+		Contact database system
+		Email template system
+	Adding of rental properties
+	Assess payments / bills 
+	Removal of rental property
+	View Tenant & lease information
+	View Relevant parking information
+	Modification of any information pretaining to a rental property
+	Management of property utilities.
+	Attach a tenant to a property
+	Removal of a tenant from a property
+	Distinguishing between Property and Units
+Desirable requirements - things we want
+	Mobile App management system
+	No-script mode
+	Text message notification of due rent
+	Adjustable user roles
+	Flexible permission system
+	ESignature system
+	Report modification options 
+	Document archive
+	Unit/property floor plan
+	Historical Data & Reporting
+		Historical rent data
+		Lease information reporting
+		Historical utility charges if applicable
+		Property work history report
+		Income report
+		Current tenant report
+		Accounting reports
+		Asset reports
+		Work order report
+		Vacancy reports
+	Credit / backround check
+	Online application
+Optional requirements - general requirements
+	Save/Exporting - Import/Loading of data
+	Continuous/modular deployment system
+	Backup data / replication utilities
+	Handle up to 100 concurrent user sessions reliably
+Future requirements - plans for the future
+	Bill Pay system
+	Lease Generation
+	Virtual tour system
+	Floor plan 
+	Advertisement management system
+	Web-links to utility
+	Integration with utility company
+	Paypal integration 
+	External property system integration
+	
