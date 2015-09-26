@@ -1,24 +1,27 @@
+ ****NOTE- THE FUNCTIONAL REQUIREMENTS HAVE ALL BEEN COVERED IN THE USER REQUIREMENT DOCUMENT, still need to complete desirable/optional/future (9/26/12:33pm)****
 Functional requirements - things we need
-	Web-based management system Compatible with Chrome, IE11+, Saffari, Firefox
+	-Web-based management system Compatible with Chrome, IE11+, Saffari, Firefox
 	Javascript enabled
-	Submit a workorder request
-	2 user roles (Tenant & Manager)
-	Query a workorder request
-	Modify a workorder
-	Closing a workorder
-	Constant contact system / eblast system
-		Contact database system
-		Email template system
-	Adding of rental properties
-	Assess payments / bills 
-	Removal of rental property
-	View Tenant & lease information
-	View Relevant parking information
-	Modification of any information pretaining to a rental property
-	Management of property utilities.
-	Attach a tenant to a property
-	Removal of a tenant from a property
-	Distinguishing between Property and Units
+	-Submit a workorder request
+	-2 user roles (Tenant & Manager)
+	-Query a workorder request
+	-Modify a workorder
+	-Closing a workorder
+	-Constant contact system / eblast system
+		-Contact database system
+		-Email template system
+	-Adding of rental properties
+	-Assess payments / bills 
+	-Removal of rental property
+	-View Tenant & lease information
+	-View Relevant parking information
+	-Modification of any information pretaining to a rental property
+	-Management of property utilities.
+	-Attach a tenant to a property
+	-Removal of a tenant from a property
+	-Distinguishing between Property and Units
+ ****NOTE- THE FUNCTIONAL REQUIREMENTS HAVE ALL BEEN COVERED IN THE USER REQUIREMENT DOCUMENT, still need to complete desirable/optional/future (9/26/12:33pm)****
+ 
 Desirable requirements - things we want
 	Mobile App management system
 	No-script mode
