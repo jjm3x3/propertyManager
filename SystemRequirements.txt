@@ -1,0 +1,4 @@
+mysql server will be used for database requirements
+The system will run on Chrome, and Firefox, IE11+.
+Javascript will be required
+system will use django
