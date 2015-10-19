@@ -1,0 +1,17 @@
+Team 2 meeting
+Date: 10/13/2025
+Participants: 
+	Jacob Meixner
+	Erik Steffens
+	Thaddeus Wanat
+
+Created a basic system architecture for our first design.
+Discussed options for design 2.
+Assigned action items to group members in order to complete the project.
+Agreed on member roles.
+
+Action Items:
+	Ken - Writing up design 2.
+	Erik - System Components / Pros & Cons for design 1.
+	Jacob - System Components / Pros & Cons for design 2.
+	Thaddeus - Reasons for selecting design 1, Sprint Planning, write up member roles.
