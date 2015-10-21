@@ -78,9 +78,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'dbProManage.sqlite3',
-#	'USER': 'postgres',
-#	'PASSWORD': 'jacob',
-#	'HOST': '/run/postgresql',
+    },
+    'prod': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dbProManage',
+	'USER': 'proManageApp',
+	'HOST': '/var/run/postgresql',
     }
 }
 
