@@ -1,0 +1,21 @@
+10/20/2015
+Attendees:
+Erik
+Jacob
+Kenneth
+Thaddeus
+
+Worked out the data model entities and relationships.
+Switched database to posgress.
+Discussed timeline.
+Ken and Jacob swap development roles.
+
+Erik needs to start up server.
+Erik work on front end.
+
+Jacob and Thaddeus work on creating database.
+
+Ken start on back end using potential datamodel.
+
+
+
