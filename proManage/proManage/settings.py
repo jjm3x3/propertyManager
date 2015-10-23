@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'properties',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,13 +79,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'dbProManage.sqlite3',
-   },
-   'prod': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbProManage',
-	'USER': 'proManageApp',
-	'HOST': '/var/run/postgresql',
-   }
+    },
+#    'prod': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'dbProManage',
+#	'USER': 'proManageApp',
+#	'HOST': '/var/run/postgresql',
+#    }
 }
 
 

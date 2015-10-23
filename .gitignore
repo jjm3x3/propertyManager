@@ -5,3 +5,4 @@
 .o
 .swp
 *.sqlite3
+*.pyc
