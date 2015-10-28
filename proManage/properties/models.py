@@ -15,10 +15,12 @@ class Unit(models.Model):
     aptType = models.CharField(max_length=20)
     rentalFee = models.IntegerField(default=0)
 
-class TennantInto(models.Model):
+class TennantInfo(models.Model):
     user = models.ForeignKey(User)
+    ssn = models.CharField(max_length=12)
+    phone = models.CharField(max_length=20)
 
-class PropertyGroup(models.Model):
+class UnitGroup(models.Model):
     authGroup = models.ForeignKey(Group)
     unit = models.ForeignKey(Unit)
 
