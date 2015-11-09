@@ -14,17 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import patterns, url
+from proManage.properties import views
 from .views import *
 
 urlpatterns = patterns('',
-    url(r'^properties/$', PropertyList.as_view(), name='propertylisting'),
-    url(r'^units/$', UnitList.as_view(), name='unitlisting'),
-    url(r'^tenantinfo/$', TenantInfoList.as_view(), name="tenantinfolisting"),
-    url(r'^unitgroups/$', UnitGroupList.as_view(), name="unitgrouplisting"),
-    url(r'^createproperty/$', PropertyCreate.as_view(), name='propertycreate'),
-    url(r'^(?P<pk>\d+)/$', PropertyDetail.as_view(), name='propertydetail'),
-    url(r'^(?P<pk>\d+)/update/$', PropertyUpdate.as_view(), name='propertyupdate'),
-    url(r'^(?P<pk>\d+)/delete/$', PropertyDelete.as_view(), name='propertydelete')
+     url(r'^$', views.user_list, name='user_list'),
+     url(r'^new$', views.user_create, name='user_new'),
+     url(r'^edit/(?P<pk>\d+)$', views.user_update, name='user_edit'),
+     url(r'^delete/(?P<pk>\d+)$', views.user_delete, name='user_delete')
 )
 
 

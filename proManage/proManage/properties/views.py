@@ -1,41 +1,39 @@
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView
-from .models import Property
-from .models import Unit
-from .models import TenantInfo
-from .models import UnitGroup
-from .models import User
-from .models import Group
+from django.shortcuts import render, redirect, get_object_or_404
+from django.forms import ModelForm
+from .models import Property, Unit, TenantInfo, UnitGroup, User, Group
 
 # Create your views here.
-class PropertyList(ListView):
-    model = Property
 
-class PropertyCreate(CreateView):
-    model = Property
-    success_url = '/'
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password', 'first_name', 'last_name']
 
-class PropertyDetail(DetailView):
-    model = Property
+def user_list(request, template_name='properties/user_list.html'):
+    users = User.objects.all()
+    data = {}
+    data['object_list'] = users
+    return render(request, template_name, data)
 
-class PropertyUpdate(UpdateView):
-    model = Property
+def user_create(request, template_name='properties/user_form.html'):
+    form = UserForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('properties:user_list')
+    return render(request, template_name, {'form':form})
 
-    def get_success_url(self):
-        return reverse('properties.detail', kwargs={
-            'pk': self.object.pk,
-        })
+def user_update(request, pk, template_name='properties/user_form.html'):
+    user = get_object_or_404(User, pk=pk)
+    form = UserForm(request.POST or None, instance=user)
+    if form.is_valid():
+        form.save()
+        return redirect('properties:user_list')
+    return render(request, template_name, {'form':form})
 
-class PropertyDelete(DeleteView):
-    model = Property
-    success_url = '/'
-
-class UnitList(ListView):
-    model = Unit
-
-class TenantInfoList(ListView):
-    model = TenantInfo
-
-class UnitGroupList(ListView):
-    model = UnitGroup
+def user_delete(request, pk, template_name='properties/user_confirm_delete.html'):
+    user = get_object_or_404(User, pk=pk)    
+    if request.method == 'POST':
+        user.delete()
+        return redirect('properties:user_list')
+    return render(request, template_name, {'object':user})
