@@ -1,0 +1,22 @@
+11/03/2015
+Attendees:
+Erik
+Jacob
+Kenneth
+Thaddeus
+
+Established FrontEnd requirements and action items. 
+Establihed BackEnd requirements and action items.
+Agreed on Member items for sprint 1.
+
+Action Items:
+
+Erik: FrontEnd work- login portals and landings for the 3 different users. Property management pages as well.
+Jacob: Deployment and Migrations
+Thaddeus: Deployment and develop a logo for the application. 
+Ken: BackEnd stuff including-
+	-Retrieve a list of all users in the system
+	-Retrieve a list of all user IDs and all user information associated with each user ID
+	-View what auth groups the user is in (group name and group ID)
+	-Add and remove users
+	-Assign users to auth groups
