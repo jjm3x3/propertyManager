@@ -5,6 +5,8 @@
     <li>{{ user.username }} ({{ user.first_name }} {{ user.last_name }} : {{ user.email }})
     <a href="{% url 'properties:user_edit' user.id %}">edit</a>
     <a href="{% url 'properties:user_delete' user.id %}">delete</a>
+    <a href="{% url 'properties:user_view_groups' user.id %}">view groups</a>
+    <a href="{% url 'properties:user_view_info' user.id %}">view info</a>
     </li>
     {% endfor %}
 </ul>

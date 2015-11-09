@@ -37,3 +37,16 @@ def user_delete(request, pk, template_name='properties/user_confirm_delete.html'
         user.delete()
         return redirect('properties:user_list')
     return render(request, template_name, {'object':user})
+
+def user_view_groups(request, pk, template_name='properties/user_view_groups.html'):
+    user = get_object_or_404(User, pk=pk)
+    groups = user.groups.all()
+    data = {}
+    data['groups_list'] = groups
+    return render(request, template_name, data)
+
+def user_view_info(request, pk, template_name='properties/user_view_info.html'):
+    user = get_object_or_404(User, pk=pk)
+    data = {}
+    data['user_info'] = user
+    return render(request, template_name, data)
