@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+SITE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "."))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'properties',
+    'proManage.properties',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'proManage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(SITE_ROOT, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,15 +77,16 @@ WSGI_APPLICATION = 'proManage.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'dbProManage.sqlite3',
-    },
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': 'dbProManage.sqlite3',
+#    },
 #    'prod': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'dbProManage',
-#	'USER': 'proManageApp',
-#	'HOST': '/var/run/postgresql',
-#    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dbpromanage',
+	'USER': 'promanageapp',
+	'PASSWORD': 'pm',
+	'HOST': 'localhost'
+     }
 }
 
 
