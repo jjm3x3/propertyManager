@@ -63,7 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
         },
     },
@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'proManage.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+#    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': 'dbProManage.sqlite3',
 #    },
@@ -108,3 +108,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "proManage/static/serve")
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "proManage/static"),
+]
+
+LOGIN_URL = '/login/'
+
+LOGIN_EXEMPT_URLS = (
+r'^login/',
+)
+
+#MIDDLEWARE_CLASSES = (
+#	'proManage.properties.middleware.require_login.LoginRequiredMiddleware',
+#)

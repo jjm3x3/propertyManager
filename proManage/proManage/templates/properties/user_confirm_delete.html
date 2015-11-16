@@ -1,4 +1,44 @@
-<form method="post">{% csrf_token %}
-    Are you sure you want to delete "{{ object }}" ?
-    <input type="submit" value="Submit" />
-</form>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/promanage.css" %}" />
+<div id="header">
+	<table id="header-table">
+		<tr>
+			<td id="logo-td">
+				<img id="logo" src="{% static "images/promanage_logo.png" %}" onclick="window.location='{% url 'properties:landing'%}';"/>
+			</td>
+			<td id="text-td">
+				Property Manager 2015
+			</td>
+		</tr>
+	</table>
+</div>
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Confirm Delete</h1>
+	</div>
+	<form method="post">{% csrf_token %}
+		Are you sure you want to delete this user?
+		<table>
+			<tr>
+				<td>Name: </td>
+				<td>
+					{{ object.first_name }} {{object.last_name}}
+				</td>
+			</tr>
+			<tr>
+				<td>Username: </td>
+				<td>
+					{{ object.username }}
+				</td>
+			</tr>
+			<tr>
+				<td>Email Address: </td>
+				<td>
+					{{ object.email }}
+				</td>
+			</tr>
+		</table>
+		
+		<input type="submit" value="Submit" />
+	</form>
+</div>

@@ -18,10 +18,13 @@ from proManage.properties import views
 from .views import *
 
 urlpatterns = patterns('',
-     url(r'^$', views.user_list, name='user_list'),
+	url(r'^$', 'django.contrib.auth.views.login',{'template_name': 'properties/login.html'} , name='login'),
+	url(r'^landing$', views.landing, name='landing'),
+     url(r'^user_list$', views.user_list, name='user_list'),
      url(r'^new$', views.user_create, name='user_new'),
      url(r'^edit/(?P<pk>\d+)$', views.user_update, name='user_edit'),
      url(r'^delete/(?P<pk>\d+)$', views.user_delete, name='user_delete'),
+	 url(r'^delete/(?P<pk>)$', views.no_delete, name='user_delete'),
      url(r'^user_view_groups/(?P<pk>\d+)$', views.user_view_groups, name='user_view_groups'),
      url(r'^user_view_info/(?P<pk>\d+)$', views.user_view_info, name='user_view_info')
 )

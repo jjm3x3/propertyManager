@@ -1,4 +1,43 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/promanage.css" %}" />
+<div id="header">
+	<table id="header-table">
+		<tr>
+			<td id="logo-td">
+				<img id="logo" src="{% static "images/promanage_logo.png" %}"  onclick="window.location='{% url 'properties:landing'%}';"/>
+			</td>
+			<td id="text-td">
+				Property Manager 2015
+			</td>
+		</tr>
+	</table>
+</div>
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Manage User</h1>
+	</div>
 <form method="post">{% csrf_token %}
-    {{ form.as_p }}
+	<table id="manage-user-table">
+		<tr>
+			<td>Username:</td><td>{{ form.username }}</td><td>{{ form.username.errors }}</td>
+		</tr>
+		<tr>
+			<td>First Name:</td><td>{{ form.first_name }}</td><td>{{ form.first_name.errors }}</td>
+		</tr>
+		<tr>
+			<td>Last Name:</td><td>{{ form.last_name }}</td><td>{{ form.last_name.errors }}</td>
+		</tr>
+		<tr>
+			<td>Email Address:</td><td>{{ form.email }}</td><td>{{ form.email.errors }}</td>
+		</tr>
+		<tr>
+			<td>Password:</td><td>{{ form.password }}</td><td>{{ form.password.errors }}</td>
+		</tr>
+	</table>
+
+
     <input type="submit" value="Submit" />
+	<input type="button" value="Cancel" onclick="window.location='{% url 'properties:user_list'%}';"/>
+	<input type="button" value="Delete" onclick="window.location='{% url 'properties:user_delete' object.id%}';"/>
 </form>
+</div>
