@@ -31,6 +31,7 @@ def user_update(request, pk, template_name='properties/user_form.html'):
     user = get_object_or_404(User, pk=pk)
     form = UserForm(request.POST or None, instance=user)
     if form.is_valid():
+        user.set_password(user.password)
         form.save()
         return redirect('properties:user_list')
     return render(request, template_name, {'form':form, 'object':user})

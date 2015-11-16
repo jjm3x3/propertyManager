@@ -103,3 +103,7 @@ font-family: Sans-serif;
 .nav-right{
 	text-align: left;
 }
+
+#delete_button{
+	margin-left: 100px;
+}
