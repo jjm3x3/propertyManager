@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/promanage.css" %}" />
+<div id="header">
+	<table id="header-table">
+		<tr>
+			<td id="logo-td">
+				<img id="logo" src="{% static "images/promanage_logo.png" %}"/>
+			</td>
+			<td id="text-td">
+				Property Manager 2015
+			</td>
+		</tr>
+	</table>
+</div>
+<div id="contents">
+	<table id="nav-table">
+		<tr>
+			<td class="nav-left"><input type="button" value="Users" onclick="window.location='{% url 'properties:user_list'%}';"/></td>
+			<td class="nav-right"><input type="button" value="Properties" /> </td>
+		</tr>
+		<tr>
+			<td class="nav-left"><input type="button" value="Work Orders" /></td>
+			<td class="nav-right"><input type="button" value="Reports" /></td>
+		</tr>
+	</table>
+	
+</div>
