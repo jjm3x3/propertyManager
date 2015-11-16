@@ -82,7 +82,7 @@ DATABASES = {
 #    },
 #    'prod': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbpromanage',
+        'NAME': 'dbProManage',
 	'USER': 'promanageapp',
 	'PASSWORD': 'pm',
 	'HOST': 'localhost'
