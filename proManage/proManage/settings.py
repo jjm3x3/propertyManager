@@ -69,6 +69,10 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+  'django.core.context_processors.auth',
+)
+
 WSGI_APPLICATION = 'proManage.wsgi.application'
 
 
@@ -76,17 +80,17 @@ WSGI_APPLICATION = 'proManage.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': 'dbProManage.sqlite3',
-#    }
-    'prod': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'dbpromanage',
-	'USER': 'promanageapp',
-	'PASSWORD': 'pm',
-	'HOST': 'localhost'
-     }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'dbProManage.sqlite3',
+    }
+#    'prod': {
+#       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#       'NAME': 'dbpromanage',
+#	'USER': 'promanageapp',
+#	'PASSWORD': 'pm',
+#	'HOST': 'localhost'
+#     }
 }
 
 
@@ -115,12 +119,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "proManage/static"),
 ]
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/'
 
 LOGIN_EXEMPT_URLS = (
-r'^login/',
+r'^$',
 )
 
 #MIDDLEWARE_CLASSES = (
-#	'proManage.properties.middleware.require_login.LoginRequiredMiddleware',
+#	'proManage.properties.require_login.LoginRequiredMiddleware',
 #)

@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="{% static "css/promanage.css" %}" />
+<div id="header">
+	<table id="header-table">
+		<tr>
+			<td id="logo-td">
+				<img id="logo" src="{% static "images/promanage_logo.png" %}" onclick="window.location='{% url 'properties:landing' %}';"/>
+			</td>
+			<td id="text-td">
+				Property Manager 2015
+			</td>
+		</tr>
+	</table>
+</div>
+

@@ -2,10 +2,12 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 from .models import Property, Unit, TenantInfo, UnitGroup, User, Group
+from django import forms
 
 # Create your views here.
 
 class UserForm(ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
         fields = ['username', 'email', 'password', 'first_name', 'last_name']
@@ -25,7 +27,7 @@ def user_create(request, template_name='properties/user_form.html'):
     if form.is_valid():
         form.save()
         return redirect('properties:user_list')
-    return render(request, template_name, {'form':form})
+    return render(request, template_name, {'form':form,'isNew':True})
 
 def user_update(request, pk, template_name='properties/user_form.html'):
     user = get_object_or_404(User, pk=pk)
