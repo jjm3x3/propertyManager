@@ -32,6 +32,7 @@ class WorkOrder(models.Model):
     problem = models.CharField(max_length=2000)
     cost = models.FloatField(null=True)
     access = models.BooleanField()
+    status = models.NullBooleanField()
 
 class PropertyGroup(models.Model):
     userGroup = models.ForeignKey(Group)
