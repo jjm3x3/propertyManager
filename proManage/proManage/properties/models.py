@@ -24,4 +24,18 @@ class UnitGroup(models.Model):
     authGroup = models.ForeignKey(Group)
     unit = models.ForeignKey(Unit)
 
+class WorkOrder(models.Model):
+    createdBy = models.ForeignKey(User)
+    unit = models.ForeignKey(Unit)
+    postedDate = models.DateTimeField(auto_now_add=True)
+    lastUpdated = models.DateTimeField(True)
+    problem = models.CharField(max_length=2000)
+    cost = models.FloatField(null=True)
+    access = models.BooleanField()
+
+class PropertyGroup(models.Model):
+    userGroup = models.ForeignKey(Group)
+    prop = models.ForeignKey(Property)
+
+
 
