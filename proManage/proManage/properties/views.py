@@ -12,6 +12,11 @@ class UserForm(ModelForm):
         model = User
         fields = ['username', 'email', 'password', 'first_name', 'last_name']
 
+class WorkOrderForm(ModelForm):
+    class Meta:
+        model = WorkOrder
+        fields = ['unit', 'problem', 'cost', 'status']
+
 def user_list(request, template_name='properties/user_list.html'):
     users = User.objects.all()
     data = {}
@@ -60,3 +65,26 @@ def user_view_info(request, pk, template_name='properties/user_view_info.html'):
     data = {}
     data['user_info'] = user
     return render(request, template_name, data)
+
+def workorder_list(request, template_name='properties/workorder_list.html'):
+    workorders = WorkOrder.objects.all()
+    data = {}
+    data['object_list'] = workorders
+    return render(request, template_name, data)
+	
+def workorder_create(request, template_name='properties/workorder_form.html'):
+    form = WorkOrderForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('properties:workorder_list')
+    return render(request, template_name, {'form':form,'isNew':True})
+
+def workorders_update(request, pk, template_name='properties/workorder_form.html'):
+    workorder = get_object_or_404(WorkOrder, pk=pk)
+    form = WorkOrderForm(request.POST or None, instance=workorder)
+    if form.is_valid():
+        form.save()
+        return redirect('properties:workorder_list')
+    return render(request, template_name, {'form':form, 'object':workorder})
+
+
