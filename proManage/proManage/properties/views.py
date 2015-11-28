@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
-from .models import Property, Unit, TenantInfo, UnitGroup, User, Group
+from .models import Property, Unit, TenantInfo, UnitGroup, User, Group, WorkOrder
 from django import forms
 
 # Create your views here.
@@ -16,6 +16,13 @@ class WorkOrderForm(ModelForm):
     class Meta:
         model = WorkOrder
         fields = ['unit', 'problem', 'cost', 'status']
+
+class PropertyForm(ModelForm):
+    class Meta:
+        model = Property
+        fields = ['address', 'city', 'state', 'zipcode', 'name']
+
+### User CRUD Functions ###
 
 def user_list(request, template_name='properties/user_list.html'):
     users = User.objects.all()
@@ -53,6 +60,9 @@ def user_delete(request, pk, template_name='properties/user_confirm_delete.html'
 def no_delete(request, pk, template_name='properties/user_confirm_delete.html'):
     return redirect('properties:user_list')
 
+def property_no_delete(request, pk, template_name='properties/property_confirm_delete.html'):
+    return redirect('properties:property_list')
+
 def user_view_groups(request, pk, template_name='properties/user_view_groups.html'):
     user = get_object_or_404(User, pk=pk)
     groups = user.groups.all()
@@ -65,6 +75,44 @@ def user_view_info(request, pk, template_name='properties/user_view_info.html'):
     data = {}
     data['user_info'] = user
     return render(request, template_name, data)
+
+### Property CRUD Functions ###
+
+def property_list(request, template_name='properties/property_list.html'):
+    properties = Property.objects.all()
+    data = {}
+    data['prop_list'] = properties
+    return render(request, template_name, data)
+
+def property_create(request, template_name='properties/property_form.html'):
+    form = PropertyForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('properties:property_list')
+    return render(request, template_name, {'form':form,'isNew':True})
+
+def property_update(request, pk, template_name='properties/property_form.html'):
+    property = get_object_or_404(Property, pk=pk)
+    form = PropertyForm(request.POST or None, instance=property)
+    if form.is_valid():
+        form.save()
+        return redirect('properties:property_list')
+    return render(request, template_name, {'form':form, 'object':property})
+
+def property_delete(request, pk, template_name='properties/property_confirm_delete.html'):
+    property = get_object_or_404(Property, pk=pk)
+    if request.method == 'POST':
+        property.delete()
+        return redirect('properties:property_list')
+    return render(request, template_name, {'object':property})
+
+def property_view_info(request, pk, template_name='properties/property_view_info.html'):
+    property = get_object_or_404(Property, pk=pk)
+    data = {}
+    data['property_info'] = property 
+    return render(request, template_name, data)
+
+### Work Order CRUD Functions ###
 
 def workorder_list(request, template_name='properties/workorder_list.html'):
     workorders = WorkOrder.objects.all()

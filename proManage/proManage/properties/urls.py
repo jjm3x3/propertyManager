@@ -21,12 +21,18 @@ urlpatterns = patterns('',
 	url(r'^$', 'django.contrib.auth.views.login',{'template_name': 'properties/login.html'} , name='login'),
 	url(r'^landing$', views.landing, name='landing'),
      url(r'^user_list$', views.user_list, name='user_list'),
+     url(r'^property_list$', views.property_list, name='property_list'),
      url(r'^new$', views.user_create, name='user_new'),
+     url(r'^property_new', views.property_create, name='property_new'),
      url(r'^edit/(?P<pk>\d+)$', views.user_update, name='user_edit'),
+     url(r'^property_edit/(?P<pk>\d+)$', views.property_update, name='property_edit'),
      url(r'^delete/(?P<pk>\d+)$', views.user_delete, name='user_delete'),
 	   url(r'^delete/(?P<pk>)$', views.no_delete, name='user_delete'),
+     url(r'^property_delete/(?P<pk>\d+)$', views.property_delete, name='property_delete'),
+     url(r'^property_delete/(?P<pk>\d+)$', views.property_no_delete, name='property_delete'),
      url(r'^user_view_groups/(?P<pk>\d+)$', views.user_view_groups, name='user_view_groups'),
-     url(r'^user_view_info/(?P<pk>\d+)$', views.user_view_info, name='user_view_info')
+     url(r'^user_view_info/(?P<pk>\d+)$', views.user_view_info, name='user_view_info'),
+     url(r'^property_view_info/(?P<pk>\d+)$', views.property_view_info, name='property_view_info')
 )
 
 
