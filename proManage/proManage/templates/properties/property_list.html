@@ -1,0 +1,15 @@
+{% load staticfiles %}
+{% include "headers/standard.html" %}
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Properties</h1>
+	</div>
+		{% for property in prop_list %}
+		<li>{{ property.name }}: {{ property.address }} {{ property.city }}, {{ property.state }} {{ property.zipcode }})
+		</li>
+		<a href="{% url 'properties:property_edit' property.id %}">edit</a>
+		<a href="{% url 'properties:property_delete' property.id %}">delete</a>
+		<a href="{% url 'properties:property_view_info' property.id %}">view info</a>
+		<a href="{% url 'properties:property_new' %}">New Property</a>
+		{% endfor %}
+</div>

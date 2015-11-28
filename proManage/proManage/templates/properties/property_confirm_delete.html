@@ -1,0 +1,26 @@
+{% load staticfiles %}
+{% include "headers/standard.html" %}
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Confirm Delete</h1>
+	</div>
+	<form method="post">{% csrf_token %}
+		Are you sure you want to delete this property?
+		<table>
+			<tr>
+				<td>Name: </td>
+				<td>
+					{{ object.name }} {{object.name}}
+				</td>
+			</tr>
+			<tr>
+				<td>Address: </td>
+				<td>
+					{{ object.address }} {{ object.city }}, {{ object.state }} {{ object.zipcode }}
+				</td>
+			</tr>
+		</table>
+		
+		<input type="submit" value="Submit" />
+	</form>
+</div>

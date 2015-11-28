@@ -1,0 +1,36 @@
+{% load staticfiles %}
+{% include "headers/standard.html" %}
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Manage Property</h1>
+	</div>
+<form method="post">{% csrf_token %}
+	<table id="manage-property-table">
+		<tr>
+			<td>Name:</td><td>{{ form.name }}</td><td>{{ form.name.errors }}</td>
+		</tr>
+		<tr>
+			<td>Address:</td><td>{{ form.address }}</td><td>{{ form.address.errors }}</td>
+		</tr>
+		<tr>
+			<td>City:</td><td>{{ form.city }}</td><td>{{ form.city.errors }}</td>
+		</tr>
+		<tr>
+			<td>State:</td><td>{{ form.state }}</td><td>{{ form.state.errors }}</td>
+		</tr>
+		<tr>
+			<td>Zipcode:</td><td>{{ form.zipcode }}</td><td>{{ form.zipcode.errors }}</td>
+		</tr>
+		<tr>
+			<td>State:</td><td>{{ form.state }}</td><td>{{ form.state.errors }}</td>
+		</tr>
+	</table>
+
+
+    <input type="submit" value="Submit" />
+	<input type="button" value="Cancel" onclick="window.location='{% url 'properties:property_list'%}';"/>
+  {% if not isNew %}
+  <input id="delete_button" type="button" value="Delete" onclick="window.location='{% url 'properties:property_delete' object.id%}';"/> 
+  {% endif %}
+</form>
+</div>
