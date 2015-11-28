@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 from .models import Property, Unit, TenantInfo, UnitGroup, User, Group, WorkOrder
 from django import forms
+from django.contrib.auth.decorators import permission_required
 
-# Create your views here.
+### Forms ### 
 
 class UserForm(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -21,6 +22,11 @@ class PropertyForm(ModelForm):
     class Meta:
         model = Property
         fields = ['address', 'city', 'state', 'zipcode', 'name']
+
+class UnitForm(ModelForm):
+    class Meta:
+        model = Unit
+        fields = ['size', 'aptType', 'rentalFee', 'unitNumber']
 
 ### User CRUD Functions ###
 
@@ -59,9 +65,6 @@ def user_delete(request, pk, template_name='properties/user_confirm_delete.html'
 	
 def no_delete(request, pk, template_name='properties/user_confirm_delete.html'):
     return redirect('properties:user_list')
-
-def property_no_delete(request, pk, template_name='properties/property_confirm_delete.html'):
-    return redirect('properties:property_list')
 
 def user_view_groups(request, pk, template_name='properties/user_view_groups.html'):
     user = get_object_or_404(User, pk=pk)
@@ -109,8 +112,48 @@ def property_delete(request, pk, template_name='properties/property_confirm_dele
 def property_view_info(request, pk, template_name='properties/property_view_info.html'):
     property = get_object_or_404(Property, pk=pk)
     data = {}
-    data['property_info'] = property 
+    data['property_info'] = property
+    data['unit_info'] = property.unit_set.all()
     return render(request, template_name, data)
+
+def property_no_delete(request, pk, template_name='properties/property_confirm_delete.html'):
+    return redirect('properties:property_list')
+
+### Unit CRUD Functions ###
+
+def unit_create(request, pk, template_name='properties/unit_form.html'):
+    property = get_object_or_404(Property, pk=pk)
+    form = UnitForm(request.POST or None)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.building = property
+        post.save()
+        return redirect('properties:property_list')
+    return render(request, template_name, {'form':form,'isNew':True,'address':property.address})
+
+def unit_update(request, pk, template_name='properties/unit_form.html'):
+    unit = get_object_or_404(Unit, pk=pk)
+    form = UnitForm(request.POST or None, instance=unit)
+    if form.is_valid():
+        form.save()
+        return redirect('properties:unit_list')
+    return render(request, template_name, {'form':form, 'object':unit})
+
+def unit_delete(request, pk, template_name='properties/unit_confirm_delete.html'):
+    unit = get_object_or_404(Unit, pk=pk)
+    if request.method == 'POST':
+        unit.delete()
+        return redirect('properties:property_list')
+    return render(request, template_name, {'object':unit})
+
+def unit_view_info(request, pk, template_name='properties/unit_view_info.html'):
+    unit = get_object_or_404(Unit, pk=pk)
+    data = {}
+    data['unit_info'] = unit 
+    return render(request, template_name, data)
+
+def unit_no_delete(request, pk, template_name='properties/unit_confirm_delete.html'):
+    return redirect('properties:unit_list')
 
 ### Work Order CRUD Functions ###
 
