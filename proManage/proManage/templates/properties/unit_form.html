@@ -1,29 +1,25 @@
-
 {% load staticfiles %}
 {% include "headers/standard.html" %}
 <div id="contents">
 	<div id="pagetitle">
-		<h1>Manage Property</h1>
+		<h1>Manage Unit</h1>
 	</div>
 <form method="post">{% csrf_token %}
-	<table id="manage-property-table">
+	<table id="manage-unit-table">
 		<tr>
-			<td>Name:</td><td>{{ form.name }}</td><td>{{ form.name.errors }}</td>
+			<td>Building:</td><td>{{ address }}</td>
 		</tr>
 		<tr>
-			<td>Address:</td><td>{{ form.address }}</td><td>{{ form.address.errors }}</td>
+			<td>Size:</td><td>{{ form.size }}</td><td>{{ form.size.errors }}</td>
 		</tr>
 		<tr>
-			<td>City:</td><td>{{ form.city }}</td><td>{{ form.city.errors }}</td>
+			<td>Unit Type:</td><td>{{ form.aptType }}</td><td>{{ form.aptType.errors }}</td>
 		</tr>
 		<tr>
-			<td>State:</td><td>{{ form.state }}</td><td>{{ form.state.errors }}</td>
+			<td>Rental Fee:</td><td>{{ form.rentalFee }}</td><td>{{ form.rentalFee.errors }}</td>
 		</tr>
 		<tr>
-			<td>Zipcode:</td><td>{{ form.zipcode }}</td><td>{{ form.zipcode.errors }}</td>
-		</tr>
-		<tr>
-			<td>State:</td><td>{{ form.state }}</td><td>{{ form.state.errors }}</td>
+			<td>Unit Number:</td><td>{{ form.unitNumber }}</td><td>{{form.unitNumber.errors }}</td>
 		</tr>
 	</table>
 

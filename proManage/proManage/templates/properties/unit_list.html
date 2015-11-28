@@ -1,0 +1,17 @@
+{% load staticfiles %}
+{% include "headers/standard.html" %}
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Units</h1>
+	</div>
+		{% for unit in unit_list %}
+		<li> {{ unit }}
+		</li>
+		<a href="{% url 'properties:unit_edit' unit.id %}">edit</a>
+		<a href="{% url 'properties:unit_delete' unit.id %}">delete</a>
+		<a href="{% url 'properties:unit_view_info' unit.id %}">view info</a>
+		{% endfor %}
+
+
+		<a href="{% url 'properties:unit_new' %}">New Unit</a>
+</div>

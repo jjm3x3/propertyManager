@@ -1,3 +1,5 @@
+{% load staticfiles %}
+{% include "headers/standard.html" %}
 
 <h1>Property Info</h1>
 <ul>
@@ -7,3 +9,13 @@
     <li>State: {{ property_info.state }}</li>
     <li>Zip Code: {{ property_info.zipcode }}</li>
 </ul>
+
+<h1>Units</h1>
+<u1>
+    {% for unit in unit_info %}
+    <li> Unit {{ unit.unitNumber }}    </li>
+    <a href="{% url 'properties:unit_delete' unit.id %}">delete unit</a>
+
+    {% endfor %}
+    <a href="{% url 'properties:unit_add' property_info.id %}">add unit</a> 
+</u1>

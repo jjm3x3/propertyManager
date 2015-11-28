@@ -10,6 +10,7 @@
 		<a href="{% url 'properties:property_edit' property.id %}">edit</a>
 		<a href="{% url 'properties:property_delete' property.id %}">delete</a>
 		<a href="{% url 'properties:property_view_info' property.id %}">view info</a>
-		<a href="{% url 'properties:property_new' %}">New Property</a>
 		{% endfor %}
+<br><br>
+		<a href="{% url 'properties:property_new' %}">New Property</a>
 </div>
