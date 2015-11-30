@@ -32,16 +32,22 @@ class UnitForm(ModelForm):
 ### User CRUD Functions ###
 
 def user_list(request, template_name='properties/user_list.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     users = User.objects.all()
     data = {}
     data['object_list'] = users
     return render(request, template_name, data)
 	
 def landing(request, template_name='properties/landing.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     data = {}
     return render(request, template_name, data)
 
 def user_create(request, template_name='properties/user_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     form = UserForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -49,6 +55,8 @@ def user_create(request, template_name='properties/user_form.html'):
     return render(request, template_name, {'form':form,'isNew':True})
 
 def user_update(request, pk, template_name='properties/user_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     user = get_object_or_404(User, pk=pk)
     form = UserForm(request.POST or None, instance=user)
     if form.is_valid():
@@ -58,6 +66,8 @@ def user_update(request, pk, template_name='properties/user_form.html'):
     return render(request, template_name, {'form':form, 'object':user})
 
 def user_delete(request, pk, template_name='properties/user_confirm_delete.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         user.delete()
@@ -65,9 +75,13 @@ def user_delete(request, pk, template_name='properties/user_confirm_delete.html'
     return render(request, template_name, {'object':user})
 	
 def no_delete(request, pk, template_name='properties/user_confirm_delete.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     return redirect('properties:user_list')
 
 def user_view_groups(request, pk, template_name='properties/user_view_groups.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     user = get_object_or_404(User, pk=pk)
     groups = user.groups.all()
     data = {}
@@ -75,6 +89,8 @@ def user_view_groups(request, pk, template_name='properties/user_view_groups.htm
     return render(request, template_name, data)
 
 def user_view_info(request, pk, template_name='properties/user_view_info.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     user = get_object_or_404(User, pk=pk)
     data = {}
     data['user_info'] = user
@@ -83,12 +99,16 @@ def user_view_info(request, pk, template_name='properties/user_view_info.html'):
 ### Property CRUD Functions ###
 
 def property_list(request, template_name='properties/property_list.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     properties = Property.objects.all()
     data = {}
     data['prop_list'] = properties
     return render(request, template_name, data)
 
 def property_create(request, template_name='properties/property_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     form = PropertyForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -96,6 +116,8 @@ def property_create(request, template_name='properties/property_form.html'):
     return render(request, template_name, {'form':form,'isNew':True})
 
 def property_update(request, pk, template_name='properties/property_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     property = get_object_or_404(Property, pk=pk)
     unit_info = property.unit_set.all()
     form = PropertyForm(request.POST or None, instance=property)
@@ -105,6 +127,8 @@ def property_update(request, pk, template_name='properties/property_form.html'):
     return render(request, template_name, {'form':form, 'object':property, 'unit_info':unit_info})
 
 def property_delete(request, pk, template_name='properties/property_confirm_delete.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     property = get_object_or_404(Property, pk=pk)
     if request.method == 'POST':
         property.delete()
@@ -112,6 +136,8 @@ def property_delete(request, pk, template_name='properties/property_confirm_dele
     return render(request, template_name, {'object':property})
 
 def property_view_info(request, pk, template_name='properties/property_view_info.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     property = get_object_or_404(Property, pk=pk)
     data = {}
     data['property_info'] = property
@@ -119,11 +145,15 @@ def property_view_info(request, pk, template_name='properties/property_view_info
     return render(request, template_name, data)
 
 def property_no_delete(request, pk, template_name='properties/property_confirm_delete.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     return redirect('properties:property_list')
 
 ### Unit CRUD Functions ###
 
 def unit_create(request, pk, template_name='properties/unit_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     property = get_object_or_404(Property, pk=pk)
     form = UnitForm(request.POST or None)
     if form.is_valid():
@@ -134,6 +164,8 @@ def unit_create(request, pk, template_name='properties/unit_form.html'):
     return render(request, template_name, {'form':form,'isNew':True,'address':property.address})
 
 def unit_update(request, pk, template_name='properties/unit_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     unit = get_object_or_404(Unit, pk=pk)
     form = UnitForm(request.POST or None, instance=unit)
     if form.is_valid():
@@ -146,6 +178,8 @@ def logout_view(request, template_name='properties/logout.html'):
     return redirect('properties:login')
 
 def unit_delete(request, pk, template_name='properties/unit_confirm_delete.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     unit = get_object_or_404(Unit, pk=pk)
     if request.method == 'POST':
         unit.delete()
@@ -153,23 +187,31 @@ def unit_delete(request, pk, template_name='properties/unit_confirm_delete.html'
     return render(request, template_name, {'object':unit})
 
 def unit_view_info(request, pk, template_name='properties/unit_view_info.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     unit = get_object_or_404(Unit, pk=pk)
     data = {}
     data['unit_info'] = unit 
     return render(request, template_name, data)
 
 def unit_no_delete(request, pk, template_name='properties/unit_confirm_delete.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     return redirect('properties:unit_list')
 
 ### Work Order CRUD Functions ###
 
 def workorder_list(request, template_name='properties/workorder_list.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     workorders = WorkOrder.objects.all()
     data = {}
     data['object_list'] = workorders
     return render(request, template_name, data)
 	
 def workorder_create(request, template_name='properties/workorder_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     form = WorkOrderForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -177,6 +219,8 @@ def workorder_create(request, template_name='properties/workorder_form.html'):
     return render(request, template_name, {'form':form,'isNew':True})
 
 def workorders_update(request, pk, template_name='properties/workorder_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
     workorder = get_object_or_404(WorkOrder, pk=pk)
     form = WorkOrderForm(request.POST or None, instance=workorder)
     if form.is_valid():
