@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from .models import Property, Unit, TenantInfo, UnitGroup, User, Group, WorkOrder
 from django import forms
 from django.contrib.auth.decorators import permission_required
+from django.contrib import auth
 
 ### Forms ### 
 
@@ -96,11 +97,12 @@ def property_create(request, template_name='properties/property_form.html'):
 
 def property_update(request, pk, template_name='properties/property_form.html'):
     property = get_object_or_404(Property, pk=pk)
+    unit_info = property.unit_set.all()
     form = PropertyForm(request.POST or None, instance=property)
     if form.is_valid():
         form.save()
         return redirect('properties:property_list')
-    return render(request, template_name, {'form':form, 'object':property})
+    return render(request, template_name, {'form':form, 'object':property, 'unit_info':unit_info})
 
 def property_delete(request, pk, template_name='properties/property_confirm_delete.html'):
     property = get_object_or_404(Property, pk=pk)
@@ -136,8 +138,12 @@ def unit_update(request, pk, template_name='properties/unit_form.html'):
     form = UnitForm(request.POST or None, instance=unit)
     if form.is_valid():
         form.save()
-        return redirect('properties:unit_list')
+        return redirect('properties:property_list')
     return render(request, template_name, {'form':form, 'object':unit})
+	
+def logout_view(request, template_name='properties/logout.html'):
+    auth.logout(request)
+    return redirect('properties:login')
 
 def unit_delete(request, pk, template_name='properties/unit_confirm_delete.html'):
     unit = get_object_or_404(Unit, pk=pk)

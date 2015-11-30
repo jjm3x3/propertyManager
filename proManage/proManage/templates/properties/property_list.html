@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% include "headers/standard.html" %}
-<div id="contents">
+<script src="{% static "js/propertiesList.js" %}"></script>
+<!-- <div id="contents">
 	<div id="pagetitle">
 		<h1>Properties</h1>
 	</div>
@@ -13,4 +14,63 @@
 		{% endfor %}
 <br><br>
 		<a href="{% url 'properties:property_new' %}">New Property</a>
+</div>-->
+
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Properties</h1>
+	</div>
+    
+    <div id="filter-div">
+        <label>Filter:</label><input type="text" id="filter" name="filter"/>
+    </div>
+	<!--<ul>
+		{% for user in object_list %}
+		<li>{{ user.username }} ({{ user.first_name }} {{ user.last_name }} : {{ user.email }})
+		<a href="{% url 'properties:user_edit' user.id %}">edit</a>
+		<a href="{% url 'properties:user_delete' user.id %}">delete</a>
+		<a href="{% url 'properties:user_view_groups' user.id %}">view groups</a>
+		<a href="{% url 'properties:user_view_info' user.id %}">view info</a>
+		</li>
+		{% endfor %}
+	</ul>-->
+	
+    <table id="header-set">
+        <thead>
+			<tr>
+				<th class="user-table-h1">Name</th>
+				<th class="user-table-h2">Location</th>
+				<th class="user-table-h3"> </th>
+			</tr>
+		</thead>
+    </table>
+	<table id="user-table">
+		<!--<thead>
+			<tr>
+				<th id="user-table-h1">Name</th>
+				<th id="user-table-h2">Location</th>
+				<th id="user-table-h3"> </th>
+			</tr>
+		</thead>-->
+        <colgroup>
+            <col class="user-table-h1">
+            <col class="user-table-h2">
+            <col class="user-table-h3">
+        </colgroup>
+		<tbody>
+		
+		{% for property in prop_list %}
+		<tr>
+			<td>{{ property.name }}</td>
+			<td>{{ property.city }}, {{property.state}}</td>
+			<td>
+				<input type="button" onclick="window.location='{% url 'properties:property_edit' property.id %}';" value="Manage"/>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+
+	</table>
+
+	<a href="{% url 'properties:property_new' %}">New Property</a>
 </div>
