@@ -4,23 +4,14 @@
 	<div id="pagetitle">
 		<h1>Users</h1>
 	</div>
-	<!--<ul>
-		{% for user in object_list %}
-		<li>{{ user.username }} ({{ user.first_name }} {{ user.last_name }} : {{ user.email }})
-		<a href="{% url 'properties:user_edit' user.id %}">edit</a>
-		<a href="{% url 'properties:user_delete' user.id %}">delete</a>
-		<a href="{% url 'properties:user_view_groups' user.id %}">view groups</a>
-		<a href="{% url 'properties:user_view_info' user.id %}">view info</a>
-		</li>
-		{% endfor %}
-	</ul>-->
 	
 	<table id="user-table">
 		<thead>
 			<tr>
 				<th id="user-table-h1">Full Name</th>
 				<th id="user-table-h2">User Name</th>
-				<th id="user-table-h3"> </th>
+				<th id="user-table-h3">Role(s)</th>
+				<th id="user-table-h4"> </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +20,9 @@
 		<tr>
 			<td>{{ user.first_name }} {{ user.last_name }}</td>
 			<td>{{ user.username }}</td>
+			<td>{% for group in user.groups.all %}
+				    {{ group.name }} 
+			    {% endfor %}</td>
 			<td>
 				<input type="button" onclick="window.location='{% url 'properties:user_edit' user.id %}';" value="Manage"/>
 			</td>
