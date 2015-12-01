@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+from django.contrib.postgres.fields import ArrayField
+import copy
 
 class Property(models.Model):
     address = models.CharField(max_length=50)
@@ -33,6 +35,7 @@ class TenantInfo(models.Model):
 class UnitGroup(models.Model):
     authGroup = models.ForeignKey(Group)
     unit = models.ForeignKey(Unit)
+    tenants = ArrayField(models.IntegerField(default=0),size=None,default=copy.deepcopy([]))
 
     def __str__(self):
         return str(self.unit) + ' ' + str(self.authGroup)
@@ -53,6 +56,7 @@ class WorkOrder(models.Model):
 class PropertyGroup(models.Model):
     userGroup = models.ForeignKey(Group)
     prop = models.ForeignKey(Property)
+    managers = ArrayField(models.IntegerField(default=0),size=None,default=copy.deepcopy([]))
 
     def __str__(self):
         return str(self.prop) + ' ' + str(self.userGroup)
