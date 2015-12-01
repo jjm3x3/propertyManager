@@ -32,4 +32,13 @@
   <input id="delete_button" type="button" value="Delete" onclick="window.location='{% url 'properties:unit_delete' object.id%}';"/> 
   {% endif %}
 </form>
+
+  {% if not isNew %}
+<h1>Tenants</h1>
+    {% for tenant in tenants %}
+    <li> {{ tenant.first_name }} {{ tenant.last_name }} </li>
+<a href="{% url 'properties:remove_tenant' object.id tenant.id %}">Remove Tenant</a>  
+  {% endfor %}
+    <a href="{% url 'properties:add_tenant' object.id %}">Add Tenant</a>
+  {% endif %}
 </div>

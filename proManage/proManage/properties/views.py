@@ -140,22 +140,6 @@ def no_delete(request, pk, template_name='properties/user_confirm_delete.html'):
         return redirect("/")
     return redirect('properties:user_list')
 
-def user_view_groups(request, pk, template_name='properties/user_view_groups.html'):
-    if not request.user.is_authenticated():
-        return redirect("/")
-    user = get_object_or_404(User, pk=pk)
-    groups = user.groups.all()
-    data = {}
-    data['groups_list'] = groups
-    return render(request, template_name, data)
-
-def user_view_info(request, pk, template_name='properties/user_view_info.html'):
-    if not request.user.is_authenticated():
-        return redirect("/")
-    user = get_object_or_404(User, pk=pk)
-    data = {}
-    data['user_info'] = user
-    return render(request, template_name, data)
 
 
 
@@ -175,6 +159,22 @@ def add_manager(request, pk, template_name='properties/add_manager.html'):
         pg.save()
         return redirect('properties:property_list')
     return render(request, template_name, {'form':form})
+
+def remove_manager(request, pk, mgr):
+    if not request.user.is_authenticated():
+        return redirect("/")
+    if not request.user.is_superuser:
+        return redirect('properties:sorry')
+    property = get_object_or_404(Property, pk=pk)
+    pg = PropertyGroup.objects.get(prop=property)
+    pg.users = [x for x in pg.users if x != int(mgr)]
+    pg.save()
+    return redirect('properties:property_list')
+	
+def no_delete(request, pk, template_name='properties/user_confirm_delete.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
+    return redirect('properties:user_list')
 
 def property_list(request, template_name='properties/property_list.html'):
     if not request.user.is_authenticated():
@@ -212,11 +212,12 @@ def property_update(request, pk, template_name='properties/property_form.html'):
     if not (request.user in User.objects.filter(groups__name="Managers") and check_authorization(request.user, pg.users)) and not request.user.is_superuser:
         return redirect('properties:sorry')
     unit_info = property.unit_set.all()
+    managers = User.objects.filter(id__in=pg.users, groups__name="Managers")
     form = PropertyForm(request.POST or None, instance=property)
     if form.is_valid():
         form.save()
         return redirect('properties:property_list')
-    return render(request, template_name, {'form':form, 'object':property, 'unit_info':unit_info})
+    return render(request, template_name, {'form':form, 'object':property, 'unit_info':unit_info, 'managers':managers})
 
 def property_delete(request, pk, template_name='properties/property_confirm_delete.html'):
     if not request.user.is_authenticated():
@@ -228,18 +229,6 @@ def property_delete(request, pk, template_name='properties/property_confirm_dele
         property.delete()
         return redirect('properties:property_list')
     return render(request, template_name, {'object':property})
-
-def property_view_info(request, pk, template_name='properties/property_view_info.html'):
-    if not request.user.is_authenticated():
-        return redirect("/")
-    property = get_object_or_404(Property, pk=pk)
-    pg = PropertyGroup.objects.get(prop=property)
-    if not check_authorization(request.user, pg.users) and not request.user.is_superuser:
-        return redirect('properties:sorry')
-    data = {}
-    data['property_info'] = property
-    data['unit_info'] = property.unit_set.all()
-    return render(request, template_name, data)
 
 def property_no_delete(request, pk, template_name='properties/property_confirm_delete.html'):
     if not request.user.is_authenticated():
@@ -269,6 +258,20 @@ def add_tenant(request, pk, template_name='properties/add_tenant.html'):
         return redirect('properties:property_list')
     return render(request, template_name, {'form':form})
 
+def remove_tenant(request, pk, ten):
+    if not request.user.is_authenticated():
+        return redirect("/")
+    if not request.user.is_superuser:
+        return redirect('properties:sorry')
+    unit = get_object_or_404(Unit, pk=pk)
+    ug = UnitGroup.objects.get(unit=unit)
+    ug.users = [x for x in ug.users if x != int(ten)]
+    ug.save()
+    pg = PropertyGroup.objects.get(prop=unit.building)
+    pg.users = [x for x in pg.users if x != int(ten)]
+    pg.save()
+    return redirect('properties:property_list')
+
 def unit_create(request, pk, template_name='properties/unit_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
@@ -280,6 +283,9 @@ def unit_create(request, pk, template_name='properties/unit_form.html'):
     if form.is_valid():
         post = form.save(commit=False)
         post.building = property
+        post.save();
+        unitGroup = UnitGroup.objects.create(unit_id=post.id)
+        unitGroup.save();
         post.save()
         return redirect('properties:property_list')
     return render(request, template_name, {'form':form,'isNew':True,'address':property.address})
@@ -292,10 +298,12 @@ def unit_update(request, pk, template_name='properties/unit_form.html'):
     if not (request.user in User.objects.filter(groups__name="Managers") and check_authorization(request.user, pg.users)) and not request.user.is_superuser:
         return redirect('properties:sorry')
     form = UnitForm(request.POST or None, instance=unit)
+    ug = UnitGroup.objects.get(unit=unit)
+    tenants = User.objects.filter(id__in=ug.users)
     if form.is_valid():
         form.save()
         return redirect('properties:property_list')
-    return render(request, template_name, {'form':form, 'object':unit})
+    return render(request, template_name, {'form':form, 'object':unit, 'tenants':tenants})
 	
 def logout_view(request, template_name='properties/logout.html'):
     auth.logout(request)
@@ -370,7 +378,7 @@ def workorder_update(request, pk, template_name='properties/workorder_form.html'
     workorder = get_object_or_404(WorkOrder, pk=pk)
     form = WorkOrderForm(request.POST or None, instance=workorder)
     if form.is_valid():
-        form.save()
+	form.save()
         return redirect('properties:workorder_list')
     return render(request, template_name, {'form':form, 'object':workorder})
 

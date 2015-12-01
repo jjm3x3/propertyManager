@@ -79,13 +79,17 @@
 	<a href="{% url 'properties:unit_add' object.id %}">New Unit</a>
     {% endif %}
 
+{% if not isNew %}
 <h1>Managers</h1>
 <u1>
-    {% if not isNew %}
+    {% for manager in managers %}
+        <li> {{ manager.first_name }} {{ manager.last_name }}</li>
+    <a href="{% url 'properties:remove_manager' object.id manager.id %}">Remove Manager</a>
+    {% endfor %}
+    <br>
     <a href="{% url 'properties:add_manager' object.id %}">Add Manager</a>
-    {% endif %}
 </u1>
-
+{% endif %}
 
   
 </form>

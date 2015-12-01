@@ -1,21 +1,6 @@
 {% load staticfiles %}
 {% include "headers/standard.html" %}
 <script src="{% static "js/propertiesList.js" %}"></script>
-<!-- <div id="contents">
-	<div id="pagetitle">
-		<h1>Properties</h1>
-	</div>
-		{% for property in prop_list %}
-		<li>{{ property.name }}: {{ property.address }} {{ property.city }}, {{ property.state }} {{ property.zipcode }})
-		</li>
-		<a href="{% url 'properties:property_edit' property.id %}">edit</a>
-		<a href="{% url 'properties:property_delete' property.id %}">delete</a>
-		<a href="{% url 'properties:property_view_info' property.id %}">view info</a>
-		{% endfor %}
-<br><br>
-		<a href="{% url 'properties:property_new' %}">New Property</a>
-</div>-->
-
 <div id="contents">
 	<div id="pagetitle">
 		<h1>Properties</h1>
@@ -24,16 +9,6 @@
     <div id="filter-div">
         <label>Filter:</label><input type="text" id="filter" name="filter"/>
     </div>
-	<!--<ul>
-		{% for user in object_list %}
-		<li>{{ user.username }} ({{ user.first_name }} {{ user.last_name }} : {{ user.email }})
-		<a href="{% url 'properties:user_edit' user.id %}">edit</a>
-		<a href="{% url 'properties:user_delete' user.id %}">delete</a>
-		<a href="{% url 'properties:user_view_groups' user.id %}">view groups</a>
-		<a href="{% url 'properties:user_view_info' user.id %}">view info</a>
-		</li>
-		{% endfor %}
-	</ul>-->
 	
     <table id="header-set">
         <thead>

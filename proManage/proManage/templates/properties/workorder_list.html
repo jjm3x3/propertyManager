@@ -22,7 +22,7 @@
 			<td>{{ workorder.postedDate }}</td>
 			<td>{{ workorder.status }}</td>
 			<td>
-				<input type="button" onclick="window.location='{% url 'properties:user_edit' user.id %}';" value="Manage"/>
+				<input type="button" onclick="window.location='{% url 'properties:workorder_edit' workorder.id %}';" value="Manage"/>
 			</td>
 		</tr>
 		{% endfor %}
@@ -30,5 +30,5 @@
 
 	</table>
 
-	<a href="{% url 'properties:user_new' %}">New User</a>
+	<a href="{% url 'properties:workorder_new' %}">New Workorder</a>
 </div>
