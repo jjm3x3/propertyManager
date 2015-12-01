@@ -50,6 +50,12 @@ class UnitForm(ModelForm):
         model = Unit
         fields = ['size', 'aptType', 'rentalFee', 'unitNumber']
 
+class ReportForm(ModelForm):
+    fileBytes = forms.FileField()
+    class Meta:
+        model = Report
+        fields = ['filename', 'fileBytes']
+        
 class AddManagerForm(forms.Form):
     users = User.objects.filter(groups__name='Managers')
     manager = forms.ModelChoiceField(users)
