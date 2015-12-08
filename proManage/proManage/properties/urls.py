@@ -39,7 +39,10 @@ urlpatterns = patterns('',
      url(r'^unit_delete/(?P<pk>\d+)$', views.unit_delete, name='unit_delete'),
      url(r'^unit_delete/(?P<pk>\d+)$', views.unit_no_delete, name='unit_delete'),
      url(r'^property_view_info/(?P<pk>\d+)$', views.property_view_info, name='property_view_info'),
-     url(r'^unit_view_info/(?P<pk>\d+)$', views.unit_view_info, name='unit_view_info')
+     url(r'^unit_view_info/(?P<pk>\d+)$', views.unit_view_info, name='unit_view_info'),
+     url(r'^workorder_list$', views.workorder_list, name='workorder_list'),
+     url(r'^workorder_new$', views.workorder_create, name='workorder_new'),
+     url(r'^workorder_edit/(?P<pk>\d+)$', views.workorder_update, name='workorder_edit'),
 )
 
 

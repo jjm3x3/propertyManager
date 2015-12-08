@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 from .models import Property, Unit, TenantInfo, UnitGroup, User, Group, WorkOrder, PropertyGroup
@@ -327,15 +327,18 @@ def unit_no_delete(request, pk, template_name='properties/unit_confirm_delete.ht
 
 
 
-
 ### Work Order CRUD Functions ###
 
 def workorder_list(request, template_name='properties/workorder_list.html'):
     if not request.user.is_authenticated():
         return redirect("/")
     workorders = WorkOrder.objects.all()
+    properties = Property.objects.all()
+    units = Unit.objects.all()
     data = {}
     data['object_list'] = workorders
+    data['properties'] = properties
+    data['units'] = units
     return render(request, template_name, data)
 	
 def workorder_create(request, template_name='properties/workorder_form.html'):
@@ -347,7 +350,7 @@ def workorder_create(request, template_name='properties/workorder_form.html'):
         return redirect('properties:workorder_list')
     return render(request, template_name, {'form':form,'isNew':True})
 
-def workorders_update(request, pk, template_name='properties/workorder_form.html'):
+def workorder_update(request, pk, template_name='properties/workorder_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
     workorder = get_object_or_404(WorkOrder, pk=pk)

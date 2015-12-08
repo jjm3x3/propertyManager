@@ -1,0 +1,34 @@
+{% load staticfiles %}
+{% include "headers/standard.html" %}
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Workorders</h1>
+	</div>
+	
+	<table id="user-table">
+		<thead>
+			<tr>
+				<th id="user-table-h1">Unit</th>
+				<th id="user-table-h2">Date</th>
+				<th id="user-table-h3">Status</th>
+				<th id="user-table-h4"> </th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		{% for workorder in object_list %}
+		<tr>
+			<td>{{ workorder.unit.unitName}}</td>
+			<td>{{ workorder.postedDate }}</td>
+			<td>{{ workorder.status }}</td>
+			<td>
+				<input type="button" onclick="window.location='{% url 'properties:user_edit' user.id %}';" value="Manage"/>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+
+	</table>
+
+	<a href="{% url 'properties:user_new' %}">New User</a>
+</div>
