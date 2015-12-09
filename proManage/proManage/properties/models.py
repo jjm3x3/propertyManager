@@ -58,4 +58,8 @@ class PropertyGroup(models.Model):
     def __str__(self):
         return str(self.prop)
 
-
+class Report(models.Model):
+     filename = models.CharField(max_length=50)
+     fileDescription = models.CharField(max_length=100)
+     fileBytes = models.FileField()
+    
