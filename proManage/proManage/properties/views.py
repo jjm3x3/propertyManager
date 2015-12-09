@@ -334,7 +334,20 @@ def unit_no_delete(request, pk, template_name='properties/unit_confirm_delete.ht
 def workorder_list(request, template_name='properties/workorder_list.html'):
     if not request.user.is_authenticated():
         return redirect("/")
-    workorders = WorkOrder.objects.all()
+    if request.user.is_superuser:
+        workorders = WorkOrder.objects.all()
+    elif request.user in User.objects.filter(groups__name="Tenants"):
+        unit_ids = []
+        for ug in UnitGroup.objects.all():
+            if request.user.id in ug.users:
+                unit_ids.append(ug.unit.id)
+        workorders = WorkOrder.objects.filter(id__in=unit_ids)
+    else:
+        unit_ids = []
+        for ug in UnitGroup.objects.all():
+            if request.user.id in ProperyGroup.objects.get(prop__exact=ug.unit.building).users:
+                unit_ids.append(ug.unit.id)
+        workorders = WorkOrder.objects.filter(id__in=unit_ids)
     data = {}
     data['object_list'] = workorders
     return render(request, template_name, data)
