@@ -6,6 +6,7 @@ from django import forms
 from django.contrib.auth.decorators import permission_required
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm 
+import datetime
 
 ### Forms ### 
 
@@ -34,9 +35,10 @@ class UserCreateForm(UserCreationForm):
         return user
 
 class WorkOrderForm(ModelForm):
+    access = forms.BooleanField(widget=forms.CheckboxInput())
     class Meta:
         model = WorkOrder
-        fields = ['unit', 'problem', 'cost', 'status']
+        fields = ['unit', 'problem', 'cost', 'status','access']
 
 class PropertyForm(ModelForm):
     class Meta:
@@ -333,12 +335,8 @@ def workorder_list(request, template_name='properties/workorder_list.html'):
     if not request.user.is_authenticated():
         return redirect("/")
     workorders = WorkOrder.objects.all()
-    properties = Property.objects.all()
-    units = Unit.objects.all()
     data = {}
     data['object_list'] = workorders
-    data['properties'] = properties
-    data['units'] = units
     return render(request, template_name, data)
 	
 def workorder_create(request, template_name='properties/workorder_form.html'):
@@ -346,7 +344,10 @@ def workorder_create(request, template_name='properties/workorder_form.html'):
         return redirect("/")
     form = WorkOrderForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        workorder = form.save(commit=False)
+        workorder.createdBy = request.user
+        workorder.lastUpdated = datetime.datetime.now()
+        workorder.save()
         return redirect('properties:workorder_list')
     return render(request, template_name, {'form':form,'isNew':True})
 
