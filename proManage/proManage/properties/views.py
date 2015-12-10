@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
-from .models import Property, Unit, TenantInfo, UnitGroup, User, Group, WorkOrder, PropertyGroup
+from .models import Property, Unit, Report, TenantInfo, UnitGroup, User, Group, WorkOrder, PropertyGroup
 from django import forms
 from django.contrib.auth.decorators import permission_required
 from django.contrib import auth
@@ -28,8 +28,8 @@ class UserCreateForm(UserCreationForm):
         user.email = self.cleaned_data["email"]
         user.first_name = self.cleaned_data["first_name"]
         user.last_name = self.cleaned_data["last_name"]
-	user.save()
-	user.groups = self.cleaned_data["groups"]
+        user.save()
+        user.groups = self.cleaned_data["groups"]
         if commit:
            user.save()
         return user
@@ -50,11 +50,6 @@ class UnitForm(ModelForm):
         model = Unit
         fields = ['size', 'aptType', 'rentalFee', 'unitNumber']
 
-class ReportForm(ModelForm):
-    fileBytes = forms.FileField()
-    class Meta:
-        model = Report
-        fields = ['filename', 'fileBytes']
         
 class AddManagerForm(forms.Form):
     users = User.objects.filter(groups__name='Managers')
@@ -63,11 +58,24 @@ class AddManagerForm(forms.Form):
 class AddTenantForm(forms.Form):
     users = User.objects.filter(groups__name='Tenants')
     tenant = forms.ModelChoiceField(users)
+    
+class ReportForm(ModelForm):
+    fileBytes = forms.FileField()
+    class Meta:
+        model = Report
+        fields = ['filename', 'fileBytes']
 
 
 
 
 ### Authorization Helper Functions ###
+
+def handle_uploaded_file(file_path):
+    print "handle_uploaded_file"
+    dest = open(file_path.name,"wb")
+    for chunk in file_path.chunks():
+        dest.write(chunk)
+    dest.close()
 
 def sorry(request, template_name='properties/sorry.html'):
     return render(request, template_name)
@@ -98,7 +106,7 @@ def user_list(request, template_name='properties/user_list.html'):
     data = {}
     data['object_list'] = users
     return render(request, template_name, data)
-	
+    
 def landing(request, template_name='properties/landing.html'):
     if not request.user.is_authenticated():
         return redirect("/")
@@ -140,7 +148,7 @@ def user_delete(request, pk, template_name='properties/user_confirm_delete.html'
         user.delete()
         return redirect('properties:user_list')
     return render(request, template_name, {'object':user})
-	
+    
 def no_delete(request, pk, template_name='properties/user_confirm_delete.html'):
     if not request.user.is_authenticated():
         return redirect("/")
@@ -176,7 +184,7 @@ def remove_manager(request, pk, mgr):
     pg.users = [x for x in pg.users if x != int(mgr)]
     pg.save()
     return redirect('properties:property_list')
-	
+    
 def no_delete(request, pk, template_name='properties/user_confirm_delete.html'):
     if not request.user.is_authenticated():
         return redirect("/")
@@ -196,7 +204,15 @@ def property_list(request, template_name='properties/property_list.html'):
     data = {}
     data['prop_list'] = properties
     return render(request, template_name, data)
-
+    
+def report_list(request, template_name='properties/report_list.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
+    reports = Report.objects.all()
+    data = {}
+    data['report_list'] = reports
+    return render(request, template_name, data)
+    
 def property_create(request, template_name='properties/property_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
@@ -208,6 +224,18 @@ def property_create(request, template_name='properties/property_form.html'):
         propGroup = PropertyGroup.objects.create(prop_id=prop.id)
         propGroup.save();
         return redirect('properties:property_list')
+    return render(request, template_name, {'form':form,'isNew':True})
+    
+def report_create(request, template_name='properties/report_form.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
+    if request.method != 'POST':
+        form = ReportForm()
+    else:
+        form = ReportForm(request.POST, request.FILES)
+    if form.is_valid():
+        report = form.save()
+        return redirect('properties:report_list')
     return render(request, template_name, {'form':form,'isNew':True})
 
 def property_update(request, pk, template_name='properties/property_form.html'):
@@ -284,7 +312,7 @@ def unit_create(request, pk, template_name='properties/unit_form.html'):
     property = get_object_or_404(Property, pk=pk)
     pg = PropertyGroup.objects.get(prop=property)
     if not (request.user in User.objects.filter(groups__name="Managers") and check_authorization(request.user, pg.users)) and not request.user.is_superuser:
-	return redirect('properties:sorry')
+        return redirect('properties:sorry')
     form = UnitForm(request.POST or None)
     if form.is_valid():
         post = form.save(commit=False)
@@ -310,7 +338,7 @@ def unit_update(request, pk, template_name='properties/unit_form.html'):
         form.save()
         return redirect('properties:property_list')
     return render(request, template_name, {'form':form, 'object':unit, 'tenants':tenants})
-	
+    
 def logout_view(request, template_name='properties/logout.html'):
     auth.logout(request)
     return redirect('properties:login')
@@ -365,7 +393,7 @@ def workorder_list(request, template_name='properties/workorder_list.html'):
     data = {}
     data['object_list'] = workorders
     return render(request, template_name, data)
-	
+    
 def workorder_create(request, template_name='properties/workorder_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
@@ -384,7 +412,7 @@ def workorder_update(request, pk, template_name='properties/workorder_form.html'
     workorder = get_object_or_404(WorkOrder, pk=pk)
     form = WorkOrderForm(request.POST or None, instance=workorder)
     if form.is_valid():
-	form.save()
+        form.save()
         return redirect('properties:workorder_list')
     return render(request, template_name, {'form':form, 'object':workorder})
 

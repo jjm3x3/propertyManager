@@ -15,11 +15,11 @@
 		</thead>
 		<tbody>
 		
-		{% for workorder in object_list %}
+		{% for report in report_list %}
 		<tr>
-			<td>{{ workorder.unit}}</td>
-			<td>{{ workorder.postedDate }}</td>
-			<td>{{ workorder.status }}</td>
+			<td>{{ report.filename}}</td>
+			<td>{{ report.fileBytes }}</td>
+			<td></td>
 			<td>
 				<input type="button" onclick="window.location='{% url 'properties:user_edit' user.id %}';" value="Manage"/>
 			</td>
@@ -29,5 +29,5 @@
 
 	</table>
 
-	<a href="{% url 'properties:user_new' %}">New User</a>
+	<a href="{% url 'properties:report_new' %}">New User</a>
 </div>
