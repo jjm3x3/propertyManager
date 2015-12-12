@@ -34,6 +34,11 @@ class UserCreateForm(UserCreationForm):
            user.save()
         return user
 
+class TenantInfoForm(ModelForm):
+    class Meta:
+        model = TenantInfo
+        fields = ['ssn','phone']
+
 class WorkOrderForm(ModelForm):
     access = forms.BooleanField(widget=forms.CheckboxInput())
     class Meta:
@@ -118,11 +123,12 @@ def user_create(request, template_name='properties/user_form.html'):
         return redirect("/")
     if not request.user.is_superuser:
         return redirect('properties:sorry')
-    form = UserCreateForm(request.POST or None)
-    if form.is_valid():
-        form.save()
+    userForm = UserCreateForm(request.POST or None)
+    infoForm = TenantInfoForm(request.POST or None)
+    if userForm.is_valid():
+        userForm.save()
         return redirect('properties:user_list')
-    return render(request, template_name, {'form':form,'isNew':True})
+    return render(request, template_name, {'userForm':userForm, 'infoForm':infoForm, 'isNew':True})
 
 def user_update(request, pk, template_name='properties/user_form.html'):
     if not request.user.is_authenticated():
