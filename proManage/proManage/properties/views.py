@@ -226,6 +226,8 @@ def property_list(request, template_name='properties/property_list.html'):
 def report_list(request, template_name='properties/report_list.html'):
     if not request.user.is_authenticated():
         return redirect("/")
+    if not request.user in User.objects.filter(groups__name="Managers") and not request.user.is_superuser:
+        return redirect('properties:sorry')
     reports = Report.objects.all()
     data = {}
     data['report_list'] = reports
@@ -247,6 +249,8 @@ def property_create(request, template_name='properties/property_form.html'):
 def report_create(request, template_name='properties/report_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
+    if not request.user in User.objects.filter(groups__name="Managers") and not request.user.is_superuser:
+        return redirect('properties:sorry')
     if request.method != 'POST':
         form = ReportForm()
     else:
