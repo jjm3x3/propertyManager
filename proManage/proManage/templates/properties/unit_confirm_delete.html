@@ -1,3 +1,4 @@
+
 {% load staticfiles %}
 {% include "headers/standard.html" %}
 <div id="contents">
@@ -5,28 +6,28 @@
 		<h1>Confirm Delete</h1>
 	</div>
 	<form method="post">{% csrf_token %}
-		Are you sure you want to delete this user?
+		Are you sure you want to delete this unit?
 		<table>
 			<tr>
-				<td>Name: </td>
+				<td>Building: </td>
 				<td>
-					{{ object.first_name }} {{object.last_name}}
+					{{ object.building }}
 				</td>
 			</tr>
 			<tr>
-				<td>Username: </td>
+				<td>Unit #: </td>
 				<td>
-					{{ object.username }}
+					{{ object.unitNumber }}
 				</td>
 			</tr>
 			<tr>
-				<td>Email Address: </td>
+				<td>Type: </td>
 				<td>
-					{{ object.email }}
+					{{ object.aptType }}
 				</td>
 			</tr>
 		</table>
-		<input type="button" value="Cancel" onclick="window.location='{% url 'properties:user_list'%}';"/>
+		<input type="button" value="Cancel" onclick="window.location='{% url 'properties:property_list'%}';"/>
 		<input type="submit" value="Submit" />
 	</form>
 </div>

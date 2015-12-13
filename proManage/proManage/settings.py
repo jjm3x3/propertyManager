@@ -69,6 +69,10 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+  'django.core.context_processors.auth',
+)
+
 WSGI_APPLICATION = 'proManage.wsgi.application'
 
 
@@ -115,12 +119,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "proManage/static"),
 ]
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/'
 
 LOGIN_EXEMPT_URLS = (
-r'^login/',
+r'^$',
 )
 
 #MIDDLEWARE_CLASSES = (
-#	'proManage.properties.middleware.require_login.LoginRequiredMiddleware',
+#	'proManage.properties.require_login.LoginRequiredMiddleware',
 #)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "proManage/static/reports")

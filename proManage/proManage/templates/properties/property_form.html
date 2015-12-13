@@ -1,0 +1,96 @@
+
+{% load staticfiles %}
+{% include "headers/standard.html" %}
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Manage Property</h1>
+	</div>
+<form method="post">{% csrf_token %}
+	<table id="manage-user-table">
+		<tr>
+			<td>Name:</td><td>{{ form.name }}</td><td>{{ form.name.errors }}</td>
+		</tr>
+		<tr>
+			<td>Address:</td><td>{{ form.address }}</td><td>{{ form.address.errors }}</td>
+		</tr>
+		<tr>
+			<td>City:</td><td>{{ form.city }}</td><td>{{ form.city.errors }}</td>
+		</tr>
+		<tr>
+			<td>State:</td><td>{{ form.state }}</td><td>{{ form.state.errors }}</td>
+		</tr>
+		<tr>
+			<td>Zipcode:</td><td>{{ form.zipcode }}</td><td>{{ form.zipcode.errors }}</td>
+		</tr>
+	</table>
+    <input type="submit" value="Submit" />
+	<input type="button" value="Cancel" onclick="window.location='{% url 'properties:property_list'%}';"/>
+      
+  {% if not isNew %}
+  <input id="delete_button" type="button" value="Delete" onclick="window.location='{% url 'properties:property_delete' object.id%}';"/> 
+  {% endif %}
+    {% if not isNew %}
+        <h2>Units</h2>
+        <table id="header-set">
+        <thead>
+			<tr>
+				<th class="unit-table-h1">Unit #</th>
+				<th class="unit-table-h2">Type</th>
+                <th class="unit-table-h3">Size</th>
+				<th class="unit-table-h4"> </th>
+                <th class="unit-table-h5"> </th>
+			</tr>
+		</thead>
+    </table>
+	<table id="user-table">
+		<!--<thead>
+			<tr>
+				<th id="user-table-h1">Name</th>
+				<th id="user-table-h2">Location</th>
+				<th id="user-table-h3"> </th>
+			</tr>
+		</thead>-->
+        <colgroup>
+            <col class="unit-table-h1">
+            <col class="unit-table-h2">
+            <col class="unit-table-h3">
+            <col class="unit-table-h4">
+            <col class="unit-table-h5">
+        </colgroup>
+		<tbody>
+		
+		{% for unit in unit_info %}
+		<tr>
+			<td>{{ unit.unitNumber }}</td>
+			<td>{{ unit.aptType }}</td>
+            <td>{{ unit.size }}</td>
+			<td id="unit-manage">
+				<input type="button" onclick="window.location='{% url 'properties:unit_edit' unit.id %}';" value="Manage"/>
+			</td>
+            <td>
+				<input type="button" onclick="window.location='{% url 'properties:unit_delete' unit.id %}';" value="Delete"/>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+
+	</table>
+
+	<a href="{% url 'properties:unit_add' object.id %}">New Unit</a>
+    {% endif %}
+
+{% if not isNew %}
+<h1>Managers</h1>
+<u1>
+    {% for manager in managers %}
+        <li> {{ manager.first_name }} {{ manager.last_name }}</li>
+    <a href="{% url 'properties:remove_manager' object.id manager.id %}">Remove Manager</a>
+    {% endfor %}
+    <br>
+    <a href="{% url 'properties:add_manager' object.id %}">Add Manager</a>
+</u1>
+{% endif %}
+
+  
+</form>
+</div>

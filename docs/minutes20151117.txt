@@ -1,0 +1,19 @@
+11/17/2015
+Attendees:
+Erik
+Jacob
+Thaddeus
+
+Established FrontEnd requirements and action items. 
+Establihed BackEnd requirements and action items.
+Agreed on Member items for sprint 2.
+
+Action Items:
+
+Erik: FrontEnd work- do views for workorders, properties and units
+Jacob: Migrations for next sprint and begin backend work for workorders
+Thaddeus: Migrations for next sprint and begin backend work for workorders
+Ken: BackEnd stuff including-
+  -Assign users to auth groups
+  -have auth groups linked to properies and units
+  -CRUD units and properties

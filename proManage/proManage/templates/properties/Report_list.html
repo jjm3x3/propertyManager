@@ -1,0 +1,32 @@
+{% load staticfiles %}
+{% include "headers/standard.html" %}
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Reports</h1>
+	</div>
+	
+	<table id="user-table">
+		<thead>
+			<tr>
+				<th id="report-table-h1">Report</th>
+				<th id="report-table-h2"> </th>
+				<th id="report-table-h3"> </th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		{% for report in report_list %}
+		<tr>
+			<td>{{ report.fileDescription}}</td>
+			<td><a href="{% static 'reports/'|add:report.fileBytes.url %}" download>Download</a></td>
+			<td>
+				<input type="button" onclick="window.location='{% url 'properties:report_delete' report.id %}';" value="Delete"/>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+
+	</table>
+
+	<a href="{% url 'properties:report_new' %}">New Report</a>
+</div>

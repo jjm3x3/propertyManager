@@ -5,28 +5,22 @@
 		<h1>Confirm Delete</h1>
 	</div>
 	<form method="post">{% csrf_token %}
-		Are you sure you want to delete this user?
+		Are you sure you want to delete this property?
 		<table>
 			<tr>
 				<td>Name: </td>
 				<td>
-					{{ object.first_name }} {{object.last_name}}
+					{{ object.name }} {{object.name}}
 				</td>
 			</tr>
 			<tr>
-				<td>Username: </td>
+				<td>Address: </td>
 				<td>
-					{{ object.username }}
-				</td>
-			</tr>
-			<tr>
-				<td>Email Address: </td>
-				<td>
-					{{ object.email }}
+					{{ object.address }} {{ object.city }}, {{ object.state }} {{ object.zipcode }}
 				</td>
 			</tr>
 		</table>
-		<input type="button" value="Cancel" onclick="window.location='{% url 'properties:user_list'%}';"/>
+		
 		<input type="submit" value="Submit" />
 	</form>
 </div>
