@@ -16,9 +16,9 @@
 
 
     <input type="submit" value="Submit" />
-	<input type="button" value="Cancel" onclick="window.location='{% url 'properties:property_list'%}';"/>
+	<input type="button" value="Cancel" onclick="window.location='{% url 'properties:report_list'%}';"/>
   {% if not isNew %}
-  <input id="delete_button" type="button" value="Delete" onclick="window.location='{% url 'properties:unit_delete' object.id%}';"/> 
+  <input id="delete_button" type="button" value="Delete" onclick="window.location='{% url 'properties:report_delete' object.id%}';"/> 
   {% endif %}
 </form>
 
