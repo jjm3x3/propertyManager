@@ -1,0 +1,20 @@
+{% load staticfiles %}
+{% include "headers/standard.html" %}
+<div id="contents">
+	<div id="pagetitle">
+		<h1>Confirm Delete</h1>
+	</div>
+	<form method="post">{% csrf_token %}
+		Are you sure you want to delete this report?
+		<table>
+			<tr>
+				<td>Report: </td>
+				<td>
+					{{ object.fileDescription }}
+				</td>
+			</tr>
+		</table>
+		
+		<input type="submit" value="Submit" />
+	</form>
+</div>

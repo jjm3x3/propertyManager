@@ -41,6 +41,7 @@ class TenantInfoForm(ModelForm):
 
 class WorkOrderForm(ModelForm):
     access = forms.BooleanField(widget=forms.CheckboxInput())
+    problem = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':40}))
     class Meta:
         model = WorkOrder
         fields = ['unit', 'problem', 'cost', 'status','access']
@@ -68,7 +69,7 @@ class ReportForm(ModelForm):
     fileBytes = forms.FileField()
     class Meta:
         model = Report
-        fields = ['filename', 'fileBytes']
+        fields = ['fileBytes', 'fileDescription']
 
 
 
@@ -126,23 +127,27 @@ def user_create(request, template_name='properties/user_form.html'):
     userForm = UserCreateForm(request.POST or None)
     infoForm = TenantInfoForm(request.POST or None)
     if userForm.is_valid():
-        userForm.save()
+        user = userForm.save()
         return redirect('properties:user_list')
-    return render(request, template_name, {'userForm':userForm, 'infoForm':infoForm, 'isNew':True})
+    return render(request, template_name, {'userForm':userForm, 'isNew':True})
 
 def user_update(request, pk, template_name='properties/user_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
     user = get_object_or_404(User, pk=pk)
+    #info = TenantInfo.objects.get(user=user)
     if not request.user.id == user.id and not request.user.is_superuser:
         return redirect('properties:sorry')
-    form = UserForm(request.POST or None, instance=user)
-    if form.is_valid():
-        form.save()
-        user.set_password(form.cleaned_data['password'])
+    userForm = UserForm(request.POST or None, instance=user)
+    #infoForm = TenantInfoForm(request.POST or None, instance=info)
+    infoForm = TenantInfoForm(request.POST or None)
+    if userForm.is_valid() and infoForm.is_valid():
+        userForm.save()
+        #SinfoForm.save()
+        user.set_password(userForm.cleaned_data['password'])
         user.save()
         return redirect('properties:user_list')
-    return render(request, template_name, {'form':form, 'object':user})
+    return render(request, template_name, {'userForm':userForm, 'infoForm':infoForm, 'object':user})
 
 def user_delete(request, pk, template_name='properties/user_confirm_delete.html'):
     if not request.user.is_authenticated():
@@ -269,6 +274,17 @@ def property_delete(request, pk, template_name='properties/property_confirm_dele
         property.delete()
         return redirect('properties:property_list')
     return render(request, template_name, {'object':property})
+    
+def report_delete(request, pk, template_name='properties/report_confirm_delete.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
+    if not request.user.is_superuser:
+        return redirect('properties:sorry')
+    report = get_object_or_404(Report, pk=pk)
+    if request.method == 'POST':
+        report.delete()
+        return redirect('properties:report_list')
+    return render(request, template_name, {'object':report})
 
 def property_no_delete(request, pk, template_name='properties/property_confirm_delete.html'):
     if not request.user.is_authenticated():

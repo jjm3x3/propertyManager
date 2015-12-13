@@ -1,26 +1,50 @@
 {% load staticfiles %}
 {% include "headers/standard.html" %}
+
+<script src="{% static "js/workorderList.js" %}"></script>
 <div id="contents">
 	<div id="pagetitle">
 		<h1>Workorders</h1>
 	</div>
-	
-	<table id="user-table">
-		<thead>
+    
+    <div id="filter-div">
+        <label>Filter:</label><input type="text" id="filter" name="filter"/><label>Show Archived:</label><input type="checkbox" id="showArchived" name="showArchived"/>
+    </div>
+    
+    
+    <table id="header-set">
+        <thead>
 			<tr>
-				<th id="user-table-h1">Unit</th>
-				<th id="user-table-h2">Date</th>
-				<th id="user-table-h3">Status</th>
-				<th id="user-table-h4"> </th>
+				<th class="wo-table-h1">Unit</th>
+				<th class="wo-table-h2">Date</th>
+				<th class="wo-table-h3">Status</th>
+				<th class="wo-table-h4"> </th>
 			</tr>
 		</thead>
+    </table>
+	
+	<table id="user-table">
+    
+     <colgroup>
+            <col class="wo-table-h1">
+            <col class="wo-table-h2">
+            <col class="wo-table-h3">
+            <col class="wo-table-h4">
+        </colgroup>
 		<tbody>
 		
 		{% for workorder in object_list %}
 		<tr>
 			<td>{{ workorder.unit}}</td>
 			<td>{{ workorder.postedDate }}</td>
-			<td>{{ workorder.status }}</td>
+			<td>
+            {% if workorder.status == None%}
+                Open
+            {% elif workorder.status == True%}
+                Closed
+            {% else %}
+                Archived
+            {% endif%}</td>
 			<td>
 				<input type="button" onclick="window.location='{% url 'properties:workorder_edit' workorder.id %}';" value="Manage"/>
 			</td>

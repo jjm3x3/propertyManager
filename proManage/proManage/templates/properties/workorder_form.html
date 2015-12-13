@@ -1,5 +1,7 @@
 {% load staticfiles %}
 {% include "headers/standard.html" %}
+
+<script src="{% static "js/workorderForm.js" %}"></script>
 <div id="contents">
 	<div id="pagetitle">
 		<h1>Manage Workorder</h1>
@@ -10,7 +12,7 @@
 			<td>Unit:</td><td>{{ form.unit }}</td><td>{{ form.unit.errors }}</td>
 		</tr>
 		<tr>
-			<td>Problem:</td><td>{{ form.problem }}</td><td>{{ form.problem.errors }}</td>
+			<td id="wo-problem-label">Problem:</td><td>{{ form.problem }}</td><td>{{ form.problem.errors }}</td>
 		</tr>
 		<tr>
 			<td>Cost:</td><td>{{ form.cost }}</td><td>{{ form.cost.errors }}</td>

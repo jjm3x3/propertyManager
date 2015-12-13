@@ -7,7 +7,7 @@
 <form enctype="multipart/form-data" method="post">{% csrf_token %}
 	<table id="manage-user-table">
 		<tr>
-			<td>Filename:</td><td>{{ form.filename }}</td><td>{{ form.filename.errors }}</td>
+			<td>File Description:</td><td>{{ form.fileDescription }}</td><td>{{ form.fileDescription.errors }}</td>
 		</tr>
 		<tr>
 			<td>File:</td><td>{{ form.fileBytes }}</td><td>{{ form.fileBytes.errors }}</td>
