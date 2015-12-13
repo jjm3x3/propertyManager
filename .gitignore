@@ -4,7 +4,7 @@
 */bin/*
 .dll
 .o
-.swp
+*.swp
 *.sqlite3
 *.pyc
 *~

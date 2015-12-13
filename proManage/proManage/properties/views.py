@@ -126,10 +126,15 @@ def user_create(request, template_name='properties/user_form.html'):
         return redirect('properties:sorry')
     userForm = UserCreateForm(request.POST or None)
     infoForm = TenantInfoForm(request.POST or None)
-    if userForm.is_valid():
+    if userForm.is_valid() and infoForm.is_valid():
         user = userForm.save()
+        info = infoForm.save(commit=False)
+        print 'here is the user:',
+        print user
+        info.user = user
+        info.save()
         return redirect('properties:user_list')
-    return render(request, template_name, {'userForm':userForm, 'isNew':True})
+    return render(request, template_name, {'userForm':userForm, 'infoForm': infoForm, 'isNew':True})
 
 def user_update(request, pk, template_name='properties/user_form.html'):
     if not request.user.is_authenticated():
