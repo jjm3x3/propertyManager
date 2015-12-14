@@ -6,6 +6,7 @@ from django import forms
 from django.contrib.auth.decorators import permission_required
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm 
+from twilio.rest import TwilioRestClient
 import datetime
 
 ### Forms ### 
@@ -443,4 +444,12 @@ def workorder_update(request, pk, template_name='properties/workorder_form.html'
         return redirect('properties:workorder_list')
     return render(request, template_name, {'form':form, 'object':workorder})
 
+#code for SMSes
 
+def sms_me(request, template_name='properteis/SMSme'):
+    account_sid = "AC0abe79ee5ba00ffa0971fb00995416b1"
+    auth_token = "7376933dda1c1d9818d4651b783158fc"
+    client = TwilioRestClient(account_sid, auth_token)
+     
+     message = client.messages.create(to="+12628256216", from_="+14144228769",
+                                          body="Hello there!")
