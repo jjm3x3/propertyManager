@@ -82,8 +82,8 @@ WSGI_APPLICATION = 'proManage.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'dbProManage',
-       'USER': 'proManageApp',
+       'NAME': 'dbpromanage',
+       'USER': 'promanageapp',
        'PASSWORD': 'pm',
        'HOST': 'localhost'
      }

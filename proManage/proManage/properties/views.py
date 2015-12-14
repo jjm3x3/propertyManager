@@ -42,6 +42,7 @@ class TenantInfoForm(ModelForm):
 class WorkOrderForm(ModelForm):
     access = forms.BooleanField(widget=forms.CheckboxInput())
     problem = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':40}))
+    cost = forms.FloatField(widget=forms.NumberInput(attrs={'step':0.01}))
     class Meta:
         model = WorkOrder
         fields = ['unit', 'problem', 'cost', 'status','access']
@@ -52,6 +53,7 @@ class PropertyForm(ModelForm):
         fields = ['address', 'city', 'state', 'zipcode', 'name']
 
 class UnitForm(ModelForm):
+    rentalFee = forms.FloatField(widget=forms.NumberInput(attrs={'step':0.01}))
     class Meta:
         model = Unit
         fields = ['size', 'aptType', 'rentalFee', 'unitNumber']
