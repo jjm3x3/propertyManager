@@ -414,7 +414,7 @@ def workorder_list(request, template_name='properties/workorder_list.html'):
     else:
         unit_ids = []
         for ug in UnitGroup.objects.all():
-            if request.user.id in ProperyGroup.objects.get(prop__exact=ug.unit.building).users:
+            if request.user.id in PropertyGroup.objects.get(prop__exact=ug.unit.building).users:
                 unit_ids.append(ug.unit.id)
         workorders = WorkOrder.objects.filter(id__in=unit_ids)
     data = {}

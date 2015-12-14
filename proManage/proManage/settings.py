@@ -83,7 +83,7 @@ DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
        'NAME': 'dbProManage',
-       'USER': 'promanageapp',
+       'USER': 'proManageApp',
        'PASSWORD': 'pm',
        'HOST': 'localhost'
      }

@@ -33,6 +33,15 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Report',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('filename', models.CharField(max_length=50)),
+                ('fileDescription', models.CharField(max_length=100)),
+                ('fileBytes', models.FileField(upload_to=b'')),
+            ],
+        ),
+        migrations.CreateModel(
             name='TenantInfo',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
