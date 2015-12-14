@@ -12,13 +12,13 @@
 		</tr>
         {% endif %}
 		<tr>
-			<td>Size:</td><td>{{ form.size }}</td><td>{{ form.size.errors }}</td>
+			<td>Size:</td><td>{{ form.size }}</td><td>&nbspSqft{{ form.size.errors }}</td>
 		</tr>
 		<tr>
 			<td>Unit Type:</td><td>{{ form.aptType }}</td><td>{{ form.aptType.errors }}</td>
 		</tr>
 		<tr>
-			<td>Rental Fee:</td><td>{{ form.rentalFee }}</td><td>{{ form.rentalFee.errors }}</td>
+			<td>Rental Fee:</td><td>${{ form.rentalFee }}</td><td>{{ form.rentalFee.errors }}</td>
 		</tr>
 		<tr>
 			<td>Unit Number:</td><td>{{ form.unitNumber }}</td><td>{{form.unitNumber.errors }}</td>
