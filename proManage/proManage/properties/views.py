@@ -476,6 +476,7 @@ def sms_me(request, template_name='properties/sms_me.html'):
     if form.isValid():
         client.messages.create( to="+12628256216", from_="+14144228769", body=form.data.get('textdata'),  )
         print 'message sent!'
+        redirect('properties:landing')
         
     data = {}               
     data['form'] = form
