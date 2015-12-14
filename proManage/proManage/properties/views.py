@@ -211,6 +211,8 @@ def no_delete(request, pk, template_name='properties/user_confirm_delete.html'):
 def property_list(request, template_name='properties/property_list.html'):
     if not request.user.is_authenticated():
         return redirect("/")
+    if request.user in User.objects.filter(groups__name="Tenants"):
+        return redirect("properties:sorry")
     if request.user.is_superuser:
         properties = Property.objects.all()
     else:
@@ -226,6 +228,8 @@ def property_list(request, template_name='properties/property_list.html'):
 def report_list(request, template_name='properties/report_list.html'):
     if not request.user.is_authenticated():
         return redirect("/")
+    if not request.user in User.objects.filter(groups__name="Managers") and not request.user.is_superuser:
+        return redirect('properties:sorry')
     reports = Report.objects.all()
     data = {}
     data['report_list'] = reports
@@ -247,6 +251,8 @@ def property_create(request, template_name='properties/property_form.html'):
 def report_create(request, template_name='properties/report_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
+    if not request.user in User.objects.filter(groups__name="Managers") and not request.user.is_superuser:
+        return redirect('properties:sorry')
     if request.method != 'POST':
         form = ReportForm()
     else:
@@ -426,6 +432,8 @@ def workorder_list(request, template_name='properties/workorder_list.html'):
 def workorder_create(request, template_name='properties/workorder_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
+    if not request.user.is_superuser and not request.user in User.objects.filter(groups__name="Managers"):
+        return redirect("properties:sorry")
     form = WorkOrderForm(request.POST or None)
     if form.is_valid():
         workorder = form.save(commit=False)
@@ -438,6 +446,8 @@ def workorder_create(request, template_name='properties/workorder_form.html'):
 def workorder_update(request, pk, template_name='properties/workorder_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
+    if not request.user.is_superuser and not request.user in User.objects.filter(groups__name="Managers"):
+        return redirect("properties:sorry")
     workorder = get_object_or_404(WorkOrder, pk=pk)
     form = WorkOrderForm(request.POST or None, instance=workorder)
     if form.is_valid():
