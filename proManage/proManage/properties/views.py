@@ -439,8 +439,8 @@ def workorder_list(request, template_name='properties/workorder_list.html'):
 def workorder_create(request, template_name='properties/workorder_form.html'):
     if not request.user.is_authenticated():
         return redirect("/")
-    if not request.user.is_superuser and not request.user in User.objects.filter(groups__name="Managers"):
-        return redirect("properties:sorry")
+    #if not request.user.is_superuser and not request.user in User.objects.filter(groups__name="Managers"):
+    #    return redirect("properties:sorry")
     form = WorkOrderForm(request.POST or None)
     if form.is_valid():
         workorder = form.save(commit=False)
