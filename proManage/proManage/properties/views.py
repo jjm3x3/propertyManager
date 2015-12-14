@@ -72,7 +72,13 @@ class ReportForm(ModelForm):
         model = Report
         fields = ['fileBytes', 'fileDescription']
 
+class TextForm(forms.Form):
+    textdata = forms.CharField(widget=forms.Textarea)
 
+    def isValid(self):
+        if self.data.get('textdata'):
+            print 'im valid'
+            return True
 
 
 ### Authorization Helper Functions ###
@@ -446,12 +452,21 @@ def workorder_update(request, pk, template_name='properties/workorder_form.html'
 
 #code for SMSes
 
-def sms_me(request, template_name='properteis/SMSme'):
+def sms_me(request, template_name='properties/sms_me.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
+    if not (request.user.is_superuser or request.user in User.objects.filter(groups__name='Managers')):
+        return redirect("/sorry")
     ACCOUNT_SID = "AC3415692abaf6e7a44f20ab3d2b0bfbde" 
     AUTH_TOKEN = "f6f9fa4c2e6a3fdcda285da380c44a48" 
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
-    
-    #client.messages.create( to="+12628256216", from_="+14144228769", body="Hi there",  )
-    print 'message sent!'
+    form = TextForm(request.POST or None)
+    if form.isValid():
+        client.messages.create( to="+12628256216", from_="+14144228769", body=form.data.get('textdata'),  )
+        print 'message sent!'
         
-    return render(request,template_name='properties/sms_me.html')
+    data = {}               
+    data['form'] = form
+    return render(request, template_name, data)
+
+
