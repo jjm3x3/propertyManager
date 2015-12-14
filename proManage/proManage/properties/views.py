@@ -447,9 +447,11 @@ def workorder_update(request, pk, template_name='properties/workorder_form.html'
 #code for SMSes
 
 def sms_me(request, template_name='properteis/SMSme'):
-    account_sid = "AC0abe79ee5ba00ffa0971fb00995416b1"
-    auth_token = "7376933dda1c1d9818d4651b783158fc"
-    client = TwilioRestClient(account_sid, auth_token)
-     
-     message = client.messages.create(to="+12628256216", from_="+14144228769",
-                                          body="Hello there!")
+    ACCOUNT_SID = "AC3415692abaf6e7a44f20ab3d2b0bfbde" 
+    AUTH_TOKEN = "f6f9fa4c2e6a3fdcda285da380c44a48" 
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+    
+    #client.messages.create( to="+12628256216", from_="+14144228769", body="Hi there",  )
+    print 'message sent!'
+        
+    return render(request,template_name='properties/sms_me.html')
