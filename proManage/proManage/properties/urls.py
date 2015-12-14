@@ -47,6 +47,7 @@ urlpatterns = patterns('',
      url(r'^workorder_list$', views.workorder_list, name='workorder_list'),
      url(r'^workorder_new$', views.workorder_create, name='workorder_new'),
      url(r'^workorder_edit/(?P<pk>\d+)$', views.workorder_update, name='workorder_edit'),
+     url(r'^sms_me$', views.sms_me, name='sms_me'),
 )
 
 

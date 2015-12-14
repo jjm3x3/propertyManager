@@ -6,6 +6,7 @@ from django import forms
 from django.contrib.auth.decorators import permission_required
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm 
+from twilio.rest import TwilioRestClient
 import datetime
 
 ### Forms ### 
@@ -73,7 +74,13 @@ class ReportForm(ModelForm):
         model = Report
         fields = ['fileBytes', 'fileDescription']
 
+class TextForm(forms.Form):
+    textdata = forms.CharField(widget=forms.Textarea)
 
+    def isValid(self):
+        if self.data.get('textdata'):
+            print 'im valid'
+            return True
 
 
 ### Authorization Helper Functions ###
@@ -454,5 +461,24 @@ def workorder_update(request, pk, template_name='properties/workorder_form.html'
         form.save()
         return redirect('properties:workorder_list')
     return render(request, template_name, {'form':form, 'object':workorder})
+
+#code for SMSes
+
+def sms_me(request, template_name='properties/sms_me.html'):
+    if not request.user.is_authenticated():
+        return redirect("/")
+    if not (request.user.is_superuser or request.user in User.objects.filter(groups__name='Managers')):
+        return redirect("/sorry")
+    ACCOUNT_SID = "AC3415692abaf6e7a44f20ab3d2b0bfbde" 
+    AUTH_TOKEN = "f6f9fa4c2e6a3fdcda285da380c44a48" 
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+    form = TextForm(request.POST or None)
+    if form.isValid():
+        client.messages.create( to="+12628256216", from_="+14144228769", body=form.data.get('textdata'),  )
+        print 'message sent!'
+        
+    data = {}               
+    data['form'] = form
+    return render(request, template_name, data)
 
 
