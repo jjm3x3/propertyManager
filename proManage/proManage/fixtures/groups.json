@@ -3,7 +3,7 @@
     "model":"auth.group",
     "pk":1,
     "fields": {
-      "name": "manager"
+      "name": "Managers"
     }
   },
   {
@@ -17,7 +17,7 @@
     "model":"auth.group",
     "pk":3,
     "fields": {
-      "name": "tenant"
+      "name": "Tenants"
     }
   }
 ]
